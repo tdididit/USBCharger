@@ -10124,6 +10124,9 @@ diameter 2 mm, horizontal, grid 10.16mm</description>
 <part name="C11" library="resistor" deviceset="C-EU" device="025-025X050" value="100n"/>
 <part name="P+6" library="supply1" deviceset="+5V" device=""/>
 <part name="GND8" library="supply1" deviceset="GND" device=""/>
+<part name="R8" library="resistor" deviceset="R-EU_" device="0204/7" value="10k"/>
+<part name="R9" library="resistor" deviceset="R-EU_" device="0204/7" value="10k"/>
+<part name="GND9" library="supply1" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -10132,6 +10135,9 @@ diameter 2 mm, horizontal, grid 10.16mm</description>
 <wire x1="45.72" y1="-22.86" x2="129.54" y2="-22.86" width="0.1524" layer="94"/>
 <wire x1="129.54" y1="-22.86" x2="129.54" y2="-50.8" width="0.1524" layer="94"/>
 <text x="124.46" y="-48.26" size="1.778" layer="94" rot="R270">1FF4-1FFB Active LOW Trigger</text>
+<text x="-17.78" y="-20.32" size="1.778" layer="91">* added two pulldown resistors
+to keep safe eeprom during 
+MCU cold start &amp; flashing</text>
 </plain>
 <instances>
 <instance part="IC1" gate="G$1" x="38.1" y="73.66"/>
@@ -10207,6 +10213,9 @@ diameter 2 mm, horizontal, grid 10.16mm</description>
 <instance part="C11" gate="G$1" x="182.88" y="-38.1" rot="R90"/>
 <instance part="P+6" gate="1" x="177.8" y="15.24"/>
 <instance part="GND8" gate="1" x="190.5" y="-45.72"/>
+<instance part="R8" gate="G$1" x="-22.86" y="-10.16" rot="R90"/>
+<instance part="R9" gate="G$1" x="-30.48" y="-5.08" rot="R90"/>
+<instance part="GND9" gate="1" x="-30.48" y="-20.32"/>
 </instances>
 <busses>
 <bus name="D[0..7],CE,OE,WE,PB[0..5],PC[0..5],PD[0..7],ALU0,ALU1">
@@ -10509,6 +10518,8 @@ diameter 2 mm, horizontal, grid 10.16mm</description>
 <wire x1="-22.86" y1="-5.08" x2="-22.86" y2="7.62" width="0.1524" layer="91"/>
 <junction x="-22.86" y="7.62"/>
 <wire x1="-22.86" y1="35.56" x2="-22.86" y2="7.62" width="0.1524" layer="91"/>
+<pinref part="R8" gate="G$1" pin="2"/>
+<junction x="-22.86" y="-5.08"/>
 </segment>
 <segment>
 <pinref part="IC1" gate="G$1" pin="(PCI0/ICP/CLKO)PB0"/>
@@ -10759,6 +10770,15 @@ diameter 2 mm, horizontal, grid 10.16mm</description>
 <wire x1="160.02" y1="-43.18" x2="190.5" y2="-43.18" width="0.1524" layer="91"/>
 <junction x="190.5" y="-43.18"/>
 </segment>
+<segment>
+<pinref part="R9" gate="G$1" pin="1"/>
+<pinref part="GND9" gate="1" pin="GND"/>
+<wire x1="-30.48" y1="-10.16" x2="-30.48" y2="-17.78" width="0.1524" layer="91"/>
+<pinref part="R8" gate="G$1" pin="1"/>
+<wire x1="-22.86" y1="-15.24" x2="-22.86" y2="-17.78" width="0.1524" layer="91"/>
+<wire x1="-22.86" y1="-17.78" x2="-30.48" y2="-17.78" width="0.1524" layer="91"/>
+<junction x="-30.48" y="-17.78"/>
+</segment>
 </net>
 <net name="+5V" class="0">
 <segment>
@@ -10923,13 +10943,17 @@ diameter 2 mm, horizontal, grid 10.16mm</description>
 <wire x1="-17.78" y1="22.86" x2="-20.32" y2="22.86" width="0.1524" layer="91"/>
 <label x="-33.02" y="22.86" size="1.778" layer="95"/>
 <pinref part="IC2" gate="A" pin="I0"/>
-<wire x1="-20.32" y1="22.86" x2="-33.02" y2="22.86" width="0.1524" layer="91"/>
+<wire x1="-20.32" y1="22.86" x2="-30.48" y2="22.86" width="0.1524" layer="91"/>
+<wire x1="-30.48" y1="22.86" x2="-33.02" y2="22.86" width="0.1524" layer="91"/>
 <wire x1="-20.32" y1="27.94" x2="-17.78" y2="27.94" width="0.1524" layer="91"/>
 <wire x1="-20.32" y1="27.94" x2="-20.32" y2="22.86" width="0.1524" layer="91"/>
 <junction x="-20.32" y="22.86"/>
 <pinref part="IC2" gate="D" pin="I0"/>
 <wire x1="-17.78" y1="0" x2="-20.32" y2="0" width="0.1524" layer="91"/>
 <wire x1="-20.32" y1="0" x2="-20.32" y2="22.86" width="0.1524" layer="91"/>
+<pinref part="R9" gate="G$1" pin="2"/>
+<wire x1="-30.48" y1="0" x2="-30.48" y2="22.86" width="0.1524" layer="91"/>
+<junction x="-30.48" y="22.86"/>
 </segment>
 <segment>
 <wire x1="187.96" y1="55.88" x2="172.72" y2="55.88" width="0.1524" layer="91"/>
@@ -11407,4 +11431,10 @@ diameter 2 mm, horizontal, grid 10.16mm</description>
 </sheets>
 </schematic>
 </drawing>
+<compatibility>
+<note version="6.3" minversion="6.2.2" severity="warning">
+Since Version 6.2.2 text objects can contain more than one line,
+which will not be processed correctly with this version.
+</note>
+</compatibility>
 </eagle>
