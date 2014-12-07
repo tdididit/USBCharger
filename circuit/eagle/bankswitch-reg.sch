@@ -749,7 +749,7 @@ Based on the following sources:
 <part name="IC4" library="74xx-eu" deviceset="74*574" device="N" technology="HCT"/>
 <part name="GND1" library="supply1" deviceset="GND" device=""/>
 <part name="FRAME1" library="frames" deviceset="FRAME_A_L" device="">
-<attribute name="HEAD" value="F4-FA (8x4kB) bankswitch register"/>
+<attribute name="HEAD" value="F4-FB (8x4kB) bankswitch register"/>
 </part>
 </parts>
 <sheets>
